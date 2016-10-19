@@ -9,30 +9,20 @@ public class PlayerScript : MonoBehaviour
     private int count;
     public Text countText;
     public GameController game;
-    public Text winText;
-    public Text messageText;
+    public float score;
 
     void Start()
     {
         GameController game = GetComponent<GameController>();
-        winText.text = "";
-        messageText.text = "";
+
+       
         count = 0;
         countText.text = updateScore();
         rb = GetComponent<Rigidbody>();
-    }
+        score = 0;
 
-    void Update()
-    {
-        if (game.Timer > 10)
-        {
-            winText.text = "You Win! Score: " + count.ToString();
-        }
+       
 
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            messageText.text = "Devyn Coyer, ID 1001417871";
-        }
     }
 
     void FixedUpdate()
@@ -48,14 +38,16 @@ public class PlayerScript : MonoBehaviour
         if(other.gameObject.CompareTag("PickUp"))
         {
             Destroy(other.gameObject);
-            count += 1;
+            game.ObjectCount -= 1;
             countText.text = updateScore();
         }
     }
 
     private string updateScore()
     {
-        string result = "Score: " + count.ToString();
+        score += 25;
+        string result = "Score: " + score.ToString();
+        
         
 
         return result;
